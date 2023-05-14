@@ -25,7 +25,7 @@ function Login({ handleLoginSubmit }) {
   return (
     <>
       <Header>
-        <Link to="/sign-up" className="header__link">Зарегестрироваться</Link>
+        <Link to="/sign-up" className="header__link">Зарегистрироваться</Link>
       </Header>
       <RegistrationPage name="login" title="Вход" buttonText="Войти" onSubmit={handleSubmit}>
         <input id="input-login-email" className="auth__input auth__input_name" name="email" type="email" placeholder="Email" minLength={2} maxLenth={40} required value={formValue.email} onChange={handleChange} />
@@ -33,7 +33,7 @@ function Login({ handleLoginSubmit }) {
         <input id="input-login-password" className="auth__input auth__input_password" name="password" type="password" placeholder="Пароль" minLength={2} maxLenth={200} required value={formValue.password} onChange={handleChange} />
         <span id="input-login-password-error" className="popup__error" />
       </RegistrationPage>
-      <Link to="/sing-in" className="auth__link">Уже зарегестрированы? Войти</Link>
+      <Link to="/sing-in" className="auth__link">Уже зарегистрированы? Войти</Link>
     </>
   );
 }

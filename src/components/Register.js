@@ -28,13 +28,13 @@ function Register({ handleRegisterSubmit }) {
       <Header>
         <Link to="/sign-in" className="header__link">Войти</Link>
       </Header>
-      <RegistrationPage name="register" title="Регистрация" buttonText="Зарегестрироваться" onSubmit={handleSubmit}>
+      <RegistrationPage name="register" title="Регистрация" buttonText="Зарегистрироваться" onSubmit={handleSubmit}>
         <input id="input-register-email" className="auth__input auth__input_name" name="email" type="email" placeholder="Email" minLength={2} maxLength={40} required value={isValue.email} onChange={handleChange} />
         <span id="input-register-email-error" className="popup__error" />
         <input id="input-register-password" className="auth__input auth__input_password" name="password" type="password" placeholder="Пароль" minLength={2} maxLength={200} required value={isValue.password} onChange={handleChange} />
         <span id="input-register-password-error" className="popup__error" />
       </RegistrationPage>
-      <Link to="/sing-in" className="auth__link">Уже зарегестрированы? Войти</Link>
+      <Link to="/sing-in" className="auth__link">Уже зарегистрированы? Войти</Link>
     </>
   );
 }

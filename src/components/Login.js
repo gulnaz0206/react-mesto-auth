@@ -3,8 +3,9 @@ import Header from "./Header";
 import { Link } from "react-router-dom";
 
 import RegistrationPage from "./RegistrationPage";
+import InfoTooltip from "./InfoTooltip";
 
-function Login({ handleLoginSubmit }) {
+function Login({ handleLoginSubmit,  isOpenErrorPopup, closeLoginErrorPopup }) {
   const [formValue, setformValue] = useState({
     email: '',
     password: ''
@@ -33,7 +34,7 @@ function Login({ handleLoginSubmit }) {
         <input id="input-login-password" className="auth__input auth__input_password" name="password" type="password" placeholder="Пароль" minLength={2} maxLenth={200} required value={formValue.password} onChange={handleChange} />
         <span id="input-login-password-error" className="popup__error" />
       </RegistrationPage>
-      <Link to="/sing-in" className="auth__link">Уже зарегистрированы? Войти</Link>
+      <InfoTooltip image={'./images/reg-error.svg'} isOpen={isOpenErrorPopup} text={'Что-то пошло не так! Попробуйте ещё раз.'} onClose={closeLoginErrorPopup} />
     </>
   );
 }

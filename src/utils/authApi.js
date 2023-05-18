@@ -41,6 +41,6 @@ export default class AuthApi {
     }
 }
 
-const BASE_URL = 'https://auth.nomoreparties.co/';
+const BASE_URL = 'https://auth.nomoreparties.co';
 
 export const authApi = new AuthApi(BASE_URL);

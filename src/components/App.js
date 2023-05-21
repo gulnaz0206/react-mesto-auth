@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Login from '../components/Login.js'
 import Register from './Register.js';
 import ProtectedRoute from './ProtectedRoute.js';
@@ -6,8 +6,11 @@ import MainPage from './MainPage.js';
 import { useEffect, useState } from 'react';
 import { authApi } from '../utils/authApi.js';
 import { api } from '../utils/api.js';
+import InfoTooltip from './InfoTooltip.js';
 
 function App() {
+
+    const navigate = useNavigate();
 
     const [loggedIn, setLoggedIn] = useState(false);
     const [userEmail, setUserEmail] = useState('');
@@ -37,11 +40,12 @@ function App() {
     const handleLoginSubmit = (email, password) => {
         authApi.signIn(email, password)
             .then((response) => {
-                localStorage.setItem('token', response);
+                localStorage.setItem('token', response.token);
                 setLoggedIn(true);
                 setUserEmail(email);
+                navigate('/');
             })
-            .catch(() => isLoginErrorPopupOpened(true))
+            .catch(() => setIsLoginErrorPopupOpened(true))
     }
 
     useEffect(() => {
@@ -50,7 +54,7 @@ function App() {
             authApi.checkUser(token)
                 .then((response) => {
                     setLoggedIn(true);
-                    setUserEmail(response.email);
+                    setUserEmail(response.data.email);
                 })
                 .catch((error) => alert(`ошибка логина: ${error}`))
         }
@@ -133,7 +137,9 @@ function App() {
             <Routes>
                 <Route
                     path="/"
-                    element={<ProtectedRoute element={<MainPage
+                    element={<ProtectedRoute
+                        element={MainPage}
+                        loggedIn={loggedIn}
                         userEmail={userEmail}
                         isEditAvatarPopupOpen={isEditAvatarPopupOpen}
                         isEditProfilePopupOpen={isEditProfilePopupOpen}
@@ -152,23 +158,24 @@ function App() {
                         currentUser={currentUser}
                         closeAllPopups={closeAllPopups}
                     />}
-                    />}
                 />
                 <Route
                     path="/sign-up"
-                    element={<Register handleRegisterSubmit={handleRegisterSubmit}
-                        isOpenErrorPopup={isRegisterErrorPopupOpened}
-                        isOpenSuccessPopup={isRegisterSuccessPopupOpened}
-                        closeRegisterPopups={closeAllPopups} />}
+                    element={<Register 
+                        handleRegisterSubmit={handleRegisterSubmit}
+                        loggedIn={loggedIn} 
+                    />}
                 />
                 <Route
                     path="/sign-in"
                     element={<Login
                         handleLoginSubmit={handleLoginSubmit}
-                        isOpenErrorPopup={isLoginErrorPopupOpened}
-                        closeLoginErrorPopup={closeAllPopups}
+                        loggedIn={loggedIn}
                     />} />
             </Routes>
+            <InfoTooltip image={'./images/reg-error.svg'} isOpen={isLoginErrorPopupOpened} text={'Что-то пошло не так! Попробуйте ещё раз.'} onClose={closeAllPopups} />
+            <InfoTooltip image={'./images/reg-success.svg'} isOpen={isRegisterSuccessPopupOpened} text={'Вы успешно зарегистрировались!'} onClose={closeAllPopups} />
+            <InfoTooltip image={'./images/reg-error.svg'} isOpen={isRegisterErrorPopupOpened} text={'Что-то пошло не так! Попробуйте ещё раз.'} onClose={closeAllPopups} />
         </div>
     );
 }

@@ -8,7 +8,7 @@ import EditProfilePopup from './EditProfilePopup.js';
 import EditAvatarPopup from './EditAvatarPopup.js';
 import AddPlacePopup from './AddPlacePopup.js';
 
-function MainPage({ userEmail, isEditAvatarPopupOpen, isEditProfilePopupOpen, isAddPlacePopupOpen, selectedCard, handleCardLike, handleCardDelete, handleEditAvatarClick, handleEditProfileClick, handleAddPlaceClick, handleCardClick, handleUpdateUser, handleUpdateAvatar, handleAddPlaceSubmit, cards, currentUser, closeAllPopups }) {
+function MainPage({ exit, userEmail, isEditAvatarPopupOpen, isEditProfilePopupOpen, isAddPlacePopupOpen, selectedCard, handleCardLike, handleCardDelete, handleEditAvatarClick, handleEditProfileClick, handleAddPlaceClick, handleCardClick, handleUpdateUser, handleUpdateAvatar, handleAddPlaceSubmit, cards, currentUser, closeAllPopups }) {
 
     return (
         <>
@@ -16,7 +16,10 @@ function MainPage({ userEmail, isEditAvatarPopupOpen, isEditProfilePopupOpen, is
             <CurrentUserContext.Provider value={currentUser}>
 
                 <Header>
-                    {userEmail}
+                    <div className='header__links'>
+                        <p className='header__email'>{userEmail}</p>
+                        <button onClick={exit} className='header__button'>Выйти</button>
+                    </div>
                 </Header>
 
                 <Main

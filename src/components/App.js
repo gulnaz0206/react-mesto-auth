@@ -15,10 +15,9 @@ function App() {
     const [loggedIn, setLoggedIn] = useState(false);
     const [userEmail, setUserEmail] = useState('');
 
-    const [isRegisterSuccessPopupOpened, setIsRegisterSuccessPopupOpened] = useState(false);
-    const [isRegisterErrorPopupOpened, setIsRegisterErrorPopupOpened] = useState(false);
+    const [isSuccessPopupOpened, setIsSuccessPopupOpened] = useState(false);
 
-    const [isLoginErrorPopupOpened, setIsLoginErrorPopupOpened] = useState(false);
+    const [isErrorPopupOpened, setIsErrorPopupOpened] = useState(false);
 
     const [currentUser, setCurrentUser] = useState(null);
     const [cards, setCards] = useState([]);
@@ -32,9 +31,9 @@ function App() {
     const handleRegisterSubmit = (email, password) => {
         authApi.signUp(email, password)
             .then(() => {
-                setIsRegisterSuccessPopupOpened(true);
+                setIsSuccessPopupOpened(true);
             })
-            .catch(() => setIsRegisterErrorPopupOpened(true))
+            .catch(() => setIsErrorPopupOpened(true))
     }
 
     const handleLoginSubmit = (email, password) => {
@@ -45,7 +44,12 @@ function App() {
                 setUserEmail(email);
                 navigate('/');
             })
-            .catch(() => setIsLoginErrorPopupOpened(true))
+            .catch(() => setIsErrorPopupOpened(true))
+    }
+
+    const onLogout = () => {
+        setLoggedIn(false);
+        localStorage.removeItem('token');
     }
 
     useEffect(() => {
@@ -98,9 +102,9 @@ function App() {
         setIsEditProfilePopupOpen(false);
         setIsAddPlacePopupOpen(false);
         setSelectedCard(null);
-        setIsRegisterErrorPopupOpened(false);
-        setIsRegisterSuccessPopupOpened(false);
-        setIsLoginErrorPopupOpened(false);
+        setIsErrorPopupOpened(false);
+        setIsSuccessPopupOpened(false);
+        setIsErrorPopupOpened(false);
     }
 
     const handleCardClick = (card) => { setSelectedCard(card) };
@@ -157,6 +161,7 @@ function App() {
                         cards={cards}
                         currentUser={currentUser}
                         closeAllPopups={closeAllPopups}
+                        onLogout={onLogout}
                     />}
                 />
                 <Route
@@ -173,9 +178,8 @@ function App() {
                         loggedIn={loggedIn}
                     />} />
             </Routes>
-            <InfoTooltip image={'./images/reg-error.svg'} isOpen={isLoginErrorPopupOpened} text={'Что-то пошло не так! Попробуйте ещё раз.'} onClose={closeAllPopups} />
-            <InfoTooltip image={'./images/reg-success.svg'} isOpen={isRegisterSuccessPopupOpened} text={'Вы успешно зарегистрировались!'} onClose={closeAllPopups} />
-            <InfoTooltip image={'./images/reg-error.svg'} isOpen={isRegisterErrorPopupOpened} text={'Что-то пошло не так! Попробуйте ещё раз.'} onClose={closeAllPopups} />
+            <InfoTooltip image={'./images/reg-error.svg'} isOpen={isErrorPopupOpened} isSuccess={false} onClose={closeAllPopups}/>
+            <InfoTooltip image={'./images/reg-success.svg'} isOpen={isSuccessPopupOpened} isSuccess={true} onClose={closeAllPopups}/>
         </div>
     );
 }

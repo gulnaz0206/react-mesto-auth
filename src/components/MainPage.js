@@ -8,7 +8,7 @@ import EditProfilePopup from './EditProfilePopup.js';
 import EditAvatarPopup from './EditAvatarPopup.js';
 import AddPlacePopup from './AddPlacePopup.js';
 
-function MainPage({ exit, userEmail, isEditAvatarPopupOpen, isEditProfilePopupOpen, isAddPlacePopupOpen, selectedCard, handleCardLike, handleCardDelete, handleEditAvatarClick, handleEditProfileClick, handleAddPlaceClick, handleCardClick, handleUpdateUser, handleUpdateAvatar, handleAddPlaceSubmit, cards, currentUser, closeAllPopups }) {
+function MainPage({ onLogout, userEmail, isEditAvatarPopupOpen, isEditProfilePopupOpen, isAddPlacePopupOpen, selectedCard, handleCardLike, handleCardDelete, handleEditAvatarClick, handleEditProfileClick, handleAddPlaceClick, handleCardClick, handleUpdateUser, handleUpdateAvatar, handleAddPlaceSubmit, cards, currentUser, closeAllPopups }) {
 
     return (
         <>
@@ -18,7 +18,7 @@ function MainPage({ exit, userEmail, isEditAvatarPopupOpen, isEditProfilePopupOp
                 <Header>
                     <div className='header__links'>
                         <p className='header__email'>{userEmail}</p>
-                        <button onClick={exit} className='header__button'>Выйти</button>
+                        <button onClick={onLogout} className='header__button'>Выйти</button>
                     </div>
                 </Header>
 
